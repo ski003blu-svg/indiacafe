@@ -1,0 +1,26 @@
+uploads = []
+outputs = []
+
+[[generated]]
+id = "4mxcQGQo2iSMtQcJYVJEB"
+uri = "file://artifacts/india-cafe/public/images/hero.png"
+type = "image"
+title = "Hero Indian Feast"
+
+[[generated]]
+id = "TwIoYZQfxKN9XaGZpk9v0"
+uri = "file://artifacts/india-cafe/public/images/about.png"
+type = "image"
+title = "About Kitchen Chef"
+
+[[generated]]
+id = "LtINNHnjbRKAsdEjz4LlR"
+uri = "file://artifacts/india-cafe/public/images/butter-chicken.png"
+type = "image"
+title = "Butter Chicken"
+
+[[generated]]
+id = "YpnmWtL8ORA-b3UujxCVT"
+uri = "file://artifacts/india-cafe/public/images/naan.png"
+type = "image"
+title = "Garlic Naan"

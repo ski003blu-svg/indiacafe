@@ -1,0 +1,20 @@
+complete website ui and ux design needs to be updated like google. 
+
+In my website it should have login and signup pages and also guest checkout too. also able to login with google account too. so, they can view their past orders details. 
+
+I have also attached the india cafe logo please update it. also change the ui colors and design make it good ui and ux design with good colors like google classic modern colors. 
+
+I am attaching the restaurant menu update according to the image menu categories and items. also generate multiple images for each item in different view points. 
+
+In our locations place shop image of that location. I am attaching both the images of both locations place it over there.
+
+in the card even I selected different orders its not showing them only increasing the order items. 
+
+for delivery address it should have separate fields like address, state, city, zip code. also. I want to mention. only accepts delivery from the shop location to 10miles radius or not accept the order if its more than 10miles from the restaurant to destination. 
+
+for delivery or pickup continue you the payment. it should have debit or credit card or apple pay. I want to integrate PayPal for now. 
+
+for the admin password where he can see all his received orders. update the status of their orders. customers should also receive updates to their email regarding their orders. once order is delivered the delivery person will submit their photo of the order to the website. so, order will be done. customer should also receive the receipt of the payment they have done through online. each order has their unique order number and the customer email when they are ordering. when they order it will generate the order number right. so, they can track their order in their website. in the admin portal what ever they update the status of the order it will update customer tracker too. also receive an email update. in the admin portal they were able to update the menu when they are out of that item they can place as not any more or sold out. food done good wording mention or able to remove in the website like a trigger able to view in the admin but not in the website. 
+
+
+admin password will be 2225

@@ -1,0 +1,813 @@
+openapi: 3.1.0
+info:
+  # Do not change the title, if the title changes, the import paths will be broken
+  title: Api
+  version: 0.1.0
+  description: India Cafe API
+servers:
+  - url: /api
+    description: Base API path
+tags:
+  - name: health
+  - name: menu
+  - name: locations
+  - name: testimonials
+  - name: contact
+  - name: orders
+  - name: paypal
+  - name: admin
+paths:
+  /healthz:
+    get:
+      operationId: healthCheck
+      tags: [health]
+      summary: Health check
+      responses:
+        "200":
+          description: Healthy
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HealthStatus"
+
+  /locations:
+    get:
+      operationId: listLocations
+      tags: [locations]
+      summary: List restaurant locations
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Location"
+
+  /menu/categories:
+    get:
+      operationId: listCategories
+      tags: [menu]
+      summary: List menu categories
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Category"
+
+  /menu/items:
+    get:
+      operationId: listMenuItems
+      tags: [menu]
+      summary: List menu items
+      parameters:
+        - in: query
+          name: categoryId
+          schema: { type: integer }
+        - in: query
+          name: search
+          schema: { type: string }
+        - in: query
+          name: featured
+          schema: { type: boolean }
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/MenuItem"
+
+  /menu/items/{id}:
+    get:
+      operationId: getMenuItem
+      tags: [menu]
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema: { type: integer }
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MenuItem"
+
+  /menu/popular:
+    get:
+      operationId: listPopularItems
+      tags: [menu]
+      summary: Top selling menu items (wow endpoint)
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/MenuItem"
+
+  /testimonials:
+    get:
+      operationId: listTestimonials
+      tags: [testimonials]
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Testimonial"
+    post:
+      operationId: createTestimonial
+      tags: [testimonials]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateTestimonialBody"
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Testimonial"
+
+  /contact:
+    post:
+      operationId: submitContact
+      tags: [contact]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateContactBody"
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ContactMessage"
+
+  /orders:
+    post:
+      operationId: createOrder
+      tags: [orders]
+      summary: Create a new order (status pending_payment)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateOrderBody"
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Order"
+
+  /orders/{id}:
+    get:
+      operationId: getOrder
+      tags: [orders]
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema: { type: integer }
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Order"
+
+  /orders/lookup:
+    get:
+      operationId: lookupOrder
+      tags: [orders]
+      summary: Look up an order by order number and email
+      parameters:
+        - in: query
+          name: orderNumber
+          required: true
+          schema: { type: string }
+        - in: query
+          name: email
+          required: true
+          schema: { type: string }
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Order"
+
+  /paypal/create-order:
+    post:
+      operationId: paypalCreateOrder
+      tags: [paypal]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PaypalCreateOrderBody"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PaypalOrderResponse"
+
+  /paypal/capture-order/{paypalOrderId}:
+    post:
+      operationId: paypalCaptureOrder
+      tags: [paypal]
+      parameters:
+        - in: path
+          name: paypalOrderId
+          required: true
+          schema: { type: string }
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PaypalCaptureResponse"
+
+  /paypal/setup:
+    get:
+      operationId: paypalSetup
+      tags: [paypal]
+      summary: Returns the PayPal client token for the SDK
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PaypalSetupResponse"
+
+  /admin/login:
+    post:
+      operationId: adminLogin
+      tags: [admin]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AdminLoginBody"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AdminLoginResponse"
+
+  /admin/me:
+    get:
+      operationId: adminMe
+      tags: [admin]
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AdminMeResponse"
+
+  /admin/dashboard:
+    get:
+      operationId: adminDashboard
+      tags: [admin]
+      summary: Dashboard summary (wow endpoint)
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DashboardSummary"
+
+  /admin/orders:
+    get:
+      operationId: adminListOrders
+      tags: [admin]
+      parameters:
+        - in: query
+          name: status
+          schema: { type: string }
+        - in: query
+          name: orderType
+          schema: { type: string }
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Order"
+
+  /admin/orders/{id}:
+    get:
+      operationId: adminGetOrder
+      tags: [admin]
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema: { type: integer }
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Order"
+    patch:
+      operationId: adminUpdateOrder
+      tags: [admin]
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema: { type: integer }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateOrderBody"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Order"
+
+  /admin/menu/items:
+    get:
+      operationId: adminListMenuItems
+      tags: [admin]
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/MenuItem"
+    post:
+      operationId: adminCreateMenuItem
+      tags: [admin]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateMenuItemBody"
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MenuItem"
+
+  /admin/menu/items/{id}:
+    patch:
+      operationId: adminUpdateMenuItem
+      tags: [admin]
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema: { type: integer }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateMenuItemBody"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MenuItem"
+    delete:
+      operationId: adminDeleteMenuItem
+      tags: [admin]
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema: { type: integer }
+      responses:
+        "204":
+          description: Deleted
+
+  /admin/menu/categories:
+    post:
+      operationId: adminCreateCategory
+      tags: [admin]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateCategoryBody"
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Category"
+
+  /admin/menu/categories/{id}:
+    delete:
+      operationId: adminDeleteCategory
+      tags: [admin]
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema: { type: integer }
+      responses:
+        "204":
+          description: Deleted
+
+  /admin/contact:
+    get:
+      operationId: adminListContact
+      tags: [admin]
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/ContactMessage"
+
+  /admin/testimonials:
+    get:
+      operationId: adminListTestimonials
+      tags: [admin]
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Testimonial"
+
+  /admin/testimonials/{id}:
+    patch:
+      operationId: adminUpdateTestimonial
+      tags: [admin]
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema: { type: integer }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateTestimonialBody"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Testimonial"
+    delete:
+      operationId: adminDeleteTestimonial
+      tags: [admin]
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema: { type: integer }
+      responses:
+        "204":
+          description: Deleted
+
+components:
+  schemas:
+    HealthStatus:
+      type: object
+      properties:
+        status: { type: string }
+      required: [status]
+
+    Location:
+      type: object
+      properties:
+        id: { type: integer }
+        name: { type: string }
+        address: { type: string }
+        phone: { type: string }
+        hours: { type: string }
+        latitude: { type: number, nullable: true }
+        longitude: { type: number, nullable: true }
+      required: [id, name, address, phone, hours]
+
+    Category:
+      type: object
+      properties:
+        id: { type: integer }
+        name: { type: string }
+        slug: { type: string }
+        sortOrder: { type: integer }
+      required: [id, name, slug, sortOrder]
+
+    CreateCategoryBody:
+      type: object
+      properties:
+        name: { type: string }
+        slug: { type: string }
+        sortOrder: { type: integer }
+      required: [name, slug]
+
+    MenuItem:
+      type: object
+      properties:
+        id: { type: integer }
+        name: { type: string }
+        description: { type: string }
+        price: { type: string, description: "Decimal string e.g. '14.99'" }
+        imageUrl: { type: string, nullable: true }
+        categoryId: { type: integer }
+        categoryName: { type: string, nullable: true }
+        isVegetarian: { type: boolean }
+        isVegan: { type: boolean }
+        isGlutenFree: { type: boolean }
+        spiceLevel: { type: integer, description: "0-3 (mild..hot)" }
+        isAvailable: { type: boolean }
+        isFeatured: { type: boolean }
+      required: [id, name, description, price, categoryId, isVegetarian, isVegan, isGlutenFree, spiceLevel, isAvailable, isFeatured]
+
+    CreateMenuItemBody:
+      type: object
+      properties:
+        name: { type: string }
+        description: { type: string }
+        price: { type: string }
+        imageUrl: { type: string, nullable: true }
+        categoryId: { type: integer }
+        isVegetarian: { type: boolean }
+        isVegan: { type: boolean }
+        isGlutenFree: { type: boolean }
+        spiceLevel: { type: integer }
+        isAvailable: { type: boolean }
+        isFeatured: { type: boolean }
+      required: [name, description, price, categoryId]
+
+    UpdateMenuItemBody:
+      type: object
+      properties:
+        name: { type: string }
+        description: { type: string }
+        price: { type: string }
+        imageUrl: { type: string, nullable: true }
+        categoryId: { type: integer }
+        isVegetarian: { type: boolean }
+        isVegan: { type: boolean }
+        isGlutenFree: { type: boolean }
+        spiceLevel: { type: integer }
+        isAvailable: { type: boolean }
+        isFeatured: { type: boolean }
+
+    Testimonial:
+      type: object
+      properties:
+        id: { type: integer }
+        name: { type: string }
+        rating: { type: integer }
+        message: { type: string }
+        isApproved: { type: boolean }
+        createdAt: { type: string, format: date-time }
+      required: [id, name, rating, message, isApproved, createdAt]
+
+    CreateTestimonialBody:
+      type: object
+      properties:
+        name: { type: string }
+        rating: { type: integer }
+        message: { type: string }
+      required: [name, rating, message]
+
+    UpdateTestimonialBody:
+      type: object
+      properties:
+        isApproved: { type: boolean }
+
+    ContactMessage:
+      type: object
+      properties:
+        id: { type: integer }
+        name: { type: string }
+        email: { type: string }
+        phone: { type: string, nullable: true }
+        message: { type: string }
+        createdAt: { type: string, format: date-time }
+      required: [id, name, email, message, createdAt]
+
+    CreateContactBody:
+      type: object
+      properties:
+        name: { type: string }
+        email: { type: string }
+        phone: { type: string, nullable: true }
+        message: { type: string }
+      required: [name, email, message]
+
+    OrderItem:
+      type: object
+      properties:
+        id: { type: integer }
+        menuItemId: { type: integer }
+        name: { type: string }
+        price: { type: string }
+        quantity: { type: integer }
+        notes: { type: string, nullable: true }
+      required: [id, menuItemId, name, price, quantity]
+
+    Order:
+      type: object
+      properties:
+        id: { type: integer }
+        orderNumber: { type: string }
+        status: { type: string, description: "pending_payment | paid | preparing | ready | completed | cancelled" }
+        orderType: { type: string, description: "pickup | delivery" }
+        locationId: { type: integer }
+        locationName: { type: string, nullable: true }
+        customerName: { type: string }
+        customerEmail: { type: string }
+        customerPhone: { type: string }
+        deliveryAddress: { type: string, nullable: true }
+        scheduledFor: { type: string, format: date-time, nullable: true }
+        notes: { type: string, nullable: true }
+        subtotal: { type: string }
+        tax: { type: string }
+        tipAmount: { type: string }
+        deliveryFee: { type: string }
+        total: { type: string }
+        paymentMethod: { type: string, nullable: true }
+        paypalOrderId: { type: string, nullable: true }
+        items:
+          type: array
+          items:
+            $ref: "#/components/schemas/OrderItem"
+        createdAt: { type: string, format: date-time }
+        updatedAt: { type: string, format: date-time }
+      required: [id, orderNumber, status, orderType, locationId, customerName, customerEmail, customerPhone, subtotal, tax, tipAmount, deliveryFee, total, items, createdAt, updatedAt]
+
+    CreateOrderItem:
+      type: object
+      properties:
+        menuItemId: { type: integer }
+        quantity: { type: integer }
+        notes: { type: string, nullable: true }
+      required: [menuItemId, quantity]
+
+    CreateOrderBody:
+      type: object
+      properties:
+        orderType: { type: string, description: "pickup | delivery" }
+        locationId: { type: integer }
+        customerName: { type: string }
+        customerEmail: { type: string }
+        customerPhone: { type: string }
+        deliveryAddress: { type: string, nullable: true }
+        scheduledFor: { type: string, format: date-time, nullable: true }
+        notes: { type: string, nullable: true }
+        tipAmount: { type: string, nullable: true }
+        items:
+          type: array
+          items:
+            $ref: "#/components/schemas/CreateOrderItem"
+      required: [orderType, locationId, customerName, customerEmail, customerPhone, items]
+
+    UpdateOrderBody:
+      type: object
+      properties:
+        status: { type: string }
+
+    PaypalCreateOrderBody:
+      type: object
+      properties:
+        orderId: { type: integer }
+      required: [orderId]
+
+    PaypalOrderResponse:
+      type: object
+      properties:
+        id: { type: string }
+      required: [id]
+
+    PaypalCaptureResponse:
+      type: object
+      properties:
+        success: { type: boolean }
+        orderId: { type: integer }
+        orderNumber: { type: string }
+      required: [success, orderId, orderNumber]
+
+    PaypalSetupResponse:
+      type: object
+      properties:
+        clientId: { type: string }
+      required: [clientId]
+
+    AdminLoginBody:
+      type: object
+      properties:
+        password: { type: string }
+      required: [password]
+
+    AdminLoginResponse:
+      type: object
+      properties:
+        token: { type: string }
+      required: [token]
+
+    AdminMeResponse:
+      type: object
+      properties:
+        authenticated: { type: boolean }
+      required: [authenticated]
+
+    DashboardSummary:
+      type: object
+      properties:
+        ordersToday: { type: integer }
+        revenueToday: { type: string }
+        ordersThisWeek: { type: integer }
+        revenueThisWeek: { type: string }
+        pendingOrders: { type: integer }
+        preparingOrders: { type: integer }
+        readyOrders: { type: integer }
+        totalMenuItems: { type: integer }
+        totalCustomers: { type: integer }
+        statusBreakdown:
+          type: array
+          items:
+            type: object
+            properties:
+              status: { type: string }
+              count: { type: integer }
+            required: [status, count]
+        recentOrders:
+          type: array
+          items:
+            $ref: "#/components/schemas/Order"
+        topItems:
+          type: array
+          items:
+            type: object
+            properties:
+              menuItemId: { type: integer }
+              name: { type: string }
+              quantity: { type: integer }
+              revenue: { type: string }
+            required: [menuItemId, name, quantity, revenue]
+      required: [ordersToday, revenueToday, ordersThisWeek, revenueThisWeek, pendingOrders, preparingOrders, readyOrders, totalMenuItems, totalCustomers, statusBreakdown, recentOrders, topItems]

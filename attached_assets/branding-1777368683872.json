@@ -1,0 +1,132 @@
+{
+  "colorScheme": "light",
+  "fonts": [
+    {
+      "family": "Montserrat",
+      "role": "heading"
+    },
+    {
+      "family": "Roboto",
+      "role": "body"
+    }
+  ],
+  "colors": {
+    "primary": "#FFDA39",
+    "secondary": "#383E56",
+    "accent": "#FFDA39",
+    "background": "#F5F5F5",
+    "textPrimary": "#212121",
+    "link": "#FF0000"
+  },
+  "typography": {
+    "fontFamilies": {
+      "primary": "Roboto",
+      "heading": "Montserrat"
+    },
+    "fontStacks": {
+      "heading": [
+        "Montserrat",
+        "sans-serif"
+      ],
+      "body": [
+        "Montserrat",
+        "sans-serif"
+      ],
+      "paragraph": [
+        "Montserrat",
+        "sans-serif"
+      ]
+    },
+    "fontSizes": {
+      "h1": "64px",
+      "h2": "32px",
+      "body": "16px"
+    }
+  },
+  "spacing": {
+    "baseUnit": 4,
+    "borderRadius": "5px"
+  },
+  "components": {
+    "buttonPrimary": {
+      "background": "#FFDA39",
+      "textColor": "#383E56",
+      "borderRadius": "4.8px",
+      "borderRadiusCorners": {
+        "topLeft": "4.8px",
+        "topRight": "4.8px",
+        "bottomRight": "4.8px",
+        "bottomLeft": "4.8px"
+      },
+      "shadow": "rgba(0, 0, 0, 0.2) 0px 0px 0px 0px"
+    },
+    "buttonSecondary": {
+      "background": "#212121",
+      "textColor": "#FFFFFF",
+      "borderRadius": "4.8px",
+      "borderRadiusCorners": {
+        "topLeft": "4.8px",
+        "topRight": "4.8px",
+        "bottomRight": "4.8px",
+        "bottomLeft": "4.8px"
+      },
+      "shadow": "rgba(0, 0, 0, 0.2) 0px 1.6px 3.2px 0px"
+    }
+  },
+  "images": {
+    "logo": "https://indiacafeiowa.com/wp-content/uploads/2020/10/india-cafe-Main-1.png",
+    "favicon": "https://indiacafeiowa.com/wp-content/uploads/2020/10/cropped-india-cafe-favicon-32x32.png",
+    "ogImage": "https://indiacafeiowa.com/wp-content/uploads/2020/10/cropped-india-cafe-favicon.png",
+    "logoHref": "https://indiacafeiowa.com/",
+    "logoAlt": "india cafe Main"
+  },
+  "__llm_logo_reasoning": {
+    "selectedIndex": 0,
+    "reasoning": "Selected #0 because it is visible, located in the header, links to the homepage, and matches the brand name 'India Cafe'.",
+    "confidence": 0.9,
+    "source": "llm"
+  },
+  "__llm_button_reasoning": {
+    "primary": {
+      "index": 1,
+      "text": "Explore Our Menu",
+      "reasoning": "Button #1 'Explore Our Menu' uses the vibrant brand color #FFDA39, making it stand out as a primary call-to-action for users to engage with the menu, which is a key action for a restaurant website."
+    },
+    "secondary": {
+      "index": 2,
+      "text": "Order Online",
+      "reasoning": "Button #2 'Order Online' uses a different color group (#212121) and is a crucial secondary action, allowing users to place orders directly, complementing the primary action of exploring the menu."
+    },
+    "confidence": 0.95
+  },
+  "personality": {
+    "tone": "playful",
+    "energy": "medium",
+    "targetAudience": "local residents and visitors looking for Indian cuisine"
+  },
+  "designSystem": {
+    "framework": "custom",
+    "componentLibrary": ""
+  },
+  "confidence": {
+    "buttons": 0.95,
+    "colors": 0.9,
+    "overall": 0.925
+  },
+  "__llm_metadata": {
+    "logoSelection": {
+      "llmCalled": true,
+      "llmSucceeded": true,
+      "finalSource": "llm",
+      "rawLogoSelection": {
+        "selectedLogoIndex": 0,
+        "selectedLogoReasoning": "Selected #0 because it is visible, located in the header, links to the homepage, and matches the brand name 'India Cafe'.",
+        "confidence": 0.9
+      }
+    },
+    "buttonClassification": {
+      "llmCalled": true,
+      "llmSucceeded": true
+    }
+  }
+}

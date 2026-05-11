@@ -1,0 +1,111 @@
+PS C:\Users\vamsi\OneDrive\Desktop\rest-main> node -v
+v20.20.2
+PS C:\Users\vamsi\OneDrive\Desktop\rest-main> npm install -g pnpm
+
+changed 1 package in 5s
+
+1 package is looking for funding
+  run `npm fund` for details
+PS C:\Users\vamsi\OneDrive\Desktop\rest-main> pnpm install
+Scope: all 9 workspace projects
+Lockfile is up to date, resolution step is skipped
+Packages: +545
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Progress: resolved 545, reused 545, downloaded 0, added 545, done
+node_modules/.pnpm/esbuild@0.27.3/node_modules/esbuild: Running postinstall script, done in 1s
+
+devDependencies:
++ prettier 3.8.1
++ typescript 5.9.3
+
+. preinstall$ sh -c 'rm -f package-lock.json yarn.lock; case "$npm_config_user_agent" in pnpm/*) ;; *) echo "Use pnpm instead" >&2; exit 1 ;; esac'
+└─ Done in 233ms
+╭ Warning ───────────────────────────────────────────────────────────────────────────────────╮
+│                                                                                            │
+│   Ignored build scripts: @clerk/shared@3.47.5, @clerk/shared@4.10.1.                       │
+│   Run "pnpm approve-builds" to pick which dependencies should be allowed to run scripts.   │
+│                                                                                            │
+╰────────────────────────────────────────────────────────────────────────────────────────────╯
+Done in 34s using pnpm v10.33.4
+PS C:\Users\vamsi\OneDrive\Desktop\rest-main> pnpm --filter @workspace/db run db:push
+ ERR_PNPM_RECURSIVE_RUN_NO_SCRIPT  None of the selected packages has a "db:push" script
+PS C:\Users\vamsi\OneDrive\Desktop\rest-main> pnpm --filter @workspace/db run db:push
+ ERR_PNPM_RECURSIVE_RUN_NO_SCRIPT  None of the selected packages has a "db:push" script
+PS C:\Users\vamsi\OneDrive\Desktop\rest-main> pnpm --filter @workspace/db run push
+
+> @workspace/db@0.0.0 push C:\Users\vamsi\OneDrive\Desktop\rest-main\lib\db
+> drizzle-kit push --config ./drizzle.config.ts
+
+Reading config file 'C:\Users\vamsi\OneDrive\Desktop\rest-main\lib\db\drizzle.config.ts'
+DATABASE_URL, ensure the database is provisioned
+C:\Users\vamsi\OneDrive\Desktop\rest-main\lib\db:
+ ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL  @workspace/db@0.0.0 push: `drizzle-kit push --config ./drizzle.config.ts`
+Exit status 1
+PS C:\Users\vamsi\OneDrive\Desktop\rest-main> pnpm --filter @workspace/db run push-force
+
+> @workspace/db@0.0.0 push-force C:\Users\vamsi\OneDrive\Desktop\rest-main\lib\db
+> drizzle-kit push --force --config ./drizzle.config.ts
+
+Reading config file 'C:\Users\vamsi\OneDrive\Desktop\rest-main\lib\db\drizzle.config.ts'
+DATABASE_URL, ensure the database is provisioned
+C:\Users\vamsi\OneDrive\Desktop\rest-main\lib\db:
+ ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL  @workspace/db@0.0.0 push-force: `drizzle-kit push --force --config ./drizzle.config.ts`
+Exit status 1
+PS C:\Users\vamsi\OneDrive\Desktop\rest-main> set DATABASE_URL=postgresql://neondb_owner:npg_bOGT9YSwE8se@ep-weathered-dream-aqc5dimx-pooler.c-8.us-east-1.aws.neon.tech/neondb?sslmode=require
+>> cd artifacts/api-server
+>> pnpm dev
+
+> @workspace/api-server@0.0.0 dev C:\Users\vamsi\OneDrive\Desktop\rest-main\artifacts\api-server
+> export NODE_ENV=development && pnpm run build && pnpm run start
+
+'export' is not recognized as an internal or external command,
+operable program or batch file.
+ ELIFECYCLE  Command failed with exit code 1.
+PS C:\Users\vamsi\OneDrive\Desktop\rest-main\artifacts\api-server> cd..
+PS C:\Users\vamsi\OneDrive\Desktop\rest-main\artifacts> cd..
+PS C:\Users\vamsi\OneDrive\Desktop\rest-main> PORT=8080 pnpm --filter @workspace/api-server run dev
+PORT=8080 : The term 'PORT=8080' is not recognized as the name of a cmdlet, function, script file, or operable program. Check the spelling of the name, or if 
+a path was included, verify that the path is correct and try again.
+At line:1 char:1
++ PORT=8080 pnpm --filter @workspace/api-server run dev
++ ~~~~~~~~~
+    + CategoryInfo          : ObjectNotFound: (PORT=8080:String) [], CommandNotFoundException
+    + FullyQualifiedErrorId : CommandNotFoundException
+ 
+PS C:\Users\vamsi\OneDrive\Desktop\rest-main> $env:PORT="8080"; pnpm --filter @workspace/api-server run dev
+
+> @workspace/api-server@0.0.0 dev C:\Users\vamsi\OneDrive\Desktop\rest-main\artifacts\api-server
+> export NODE_ENV=development && pnpm run build && pnpm run start
+
+'export' is not recognized as an internal or external command,
+operable program or batch file.
+C:\Users\vamsi\OneDrive\Desktop\rest-main\artifacts\api-server:
+ ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL  @workspace/api-server@0.0.0 dev: `export NODE_ENV=development && pnpm run build && pnpm run start`
+Exit status 1
+PS C:\Users\vamsi\OneDrive\Desktop\rest-main> cd artifacts 
+PS C:\Users\vamsi\OneDrive\Desktop\rest-main\artifacts> cd india-cafe
+PS C:\Users\vamsi\OneDrive\Desktop\rest-main\artifacts\india-cafe> $env:PORT="8080"; pnpm --filter @workspace/api-server run dev
+
+> @workspace/api-server@0.0.0 dev C:\Users\vamsi\OneDrive\Desktop\rest-main\artifacts\api-server
+> export NODE_ENV=development && pnpm run build && pnpm run start
+
+'export' is not recognized as an internal or external command,
+operable program or batch file.
+C:\Users\vamsi\OneDrive\Desktop\rest-main\artifacts\api-server:
+ ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL  @workspace/api-server@0.0.0 dev: `export NODE_ENV=development && pnpm run build && pnpm run start`
+Exit status 1
+PS C:\Users\vamsi\OneDrive\Desktop\rest-main\artifacts\india-cafe> $env:PORT="3000"; pnpm --filter @workspace/india-cafe run dev
+
+> @workspace/india-cafe@0.0.0 dev C:\Users\vamsi\OneDrive\Desktop\rest-main\artifacts\india-cafe
+> vite --config vite.config.ts --host 0.0.0.0
+
+
+  VITE v7.3.2  ready in 1206 ms
+
+  ➜  Local:   http://localhost:3000/
+  ➜  Network: http://10.0.7.143:3000/
+  ➜  Network: http://10.59.26.127:3000/
+  ➜  press h + enter to show help
+
+
+
