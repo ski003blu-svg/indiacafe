@@ -36,7 +36,7 @@ app.use(CLERK_PROXY_PATH, clerkProxyMiddleware());
 app.use(cors({
   credentials: true,
   origin: [
-    "https://493b36bc.indiacafe.pages.dev",
+    "https://indiacafe.pages.dev",
     "http://localhost:5173"
   ]
 }));
